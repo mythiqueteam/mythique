@@ -7,6 +7,12 @@ class MainScene < MG::Scene
     add_walls
     add_hero
 
+    contact = 0
+    on_touch_begin do
+      contact.even? ? start_update : stop_update
+      contact += 1
+    end
+
   end
 
   def add_floor
@@ -50,6 +56,7 @@ class MainScene < MG::Scene
         wall.position = [x, y]
         wall.attach_physics_box
         wall.dynamic = false
+        wall.collision_mask
         add wall
 
         y -= img_size[:height]
@@ -61,11 +68,14 @@ class MainScene < MG::Scene
     @hero = Chocobo::Image.get_sprite("hero.png")
     @hero.position = [200, 200]
     @hero.attach_physics_box
-    @hero.collision_mask
     @hero.dynamic = false
 
     add @hero
   end
 
-
+  def update(delta)
+    movment = 8
+    position = @hero.position
+    @hero.position = [position.x - movment, position.y + movment]
+  end
 end
