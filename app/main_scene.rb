@@ -5,6 +5,7 @@ class MainScene < MG::Scene
 
     add_floor
     add_walls
+    add_hero
 
   end
 
@@ -55,4 +56,16 @@ class MainScene < MG::Scene
         @backgrounds.last << wall
     end
   end
+
+  def add_hero
+    @hero = Chocobo::Image.get_sprite("hero.png")
+    @hero.position = [200, 200]
+    @hero.attach_physics_box
+    @hero.collision_mask
+    @hero.dynamic = false
+
+    add @hero
+  end
+
+
 end
